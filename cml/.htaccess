@@ -1,0 +1,5 @@
+AddType application/octet-stream csv
+AuthName "OkayCMS 1C"
+AuthType Basic
+AuthUserFile C:\OSPanel\domains\OkayCMS2/cml/.passwd
+require valid-user
