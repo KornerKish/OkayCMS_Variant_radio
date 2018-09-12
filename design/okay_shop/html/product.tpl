@@ -145,13 +145,13 @@
                     <form class="fn_variants" action="/{$lang_link}cart">
                         <div class="row">
                             <div class="col-sm-6">
-                                
+
                                 {* Product variants *}
                                 {if $product->variant_radio}
                                     <div style="margin-top: 10px;" class="fn_variant {if $product->variants|count < 2} hidden{/if}">
                                         {foreach $product->variants as $v}
-                                            <input type="radio" id="variant{$v->id}" class="radio"
-                                                   name="variant" value="{$v->id}"
+                                            <input type="radio" id="variant{$v->id}" class="radio" data-variant="variant"
+                                                   name="{$product->name}" value="{$v->id}"
                                                    data-price="{$v->price|convert}" {if (empty($first))} checked="checked" {$first=1} {/if}
                                                    data-stock="{$v->stock}" {if $v->compare_price > 0}
                                                 data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku}
@@ -161,7 +161,7 @@
                                         {/foreach}
                                     </div>
                                 {else}
-                                    <select name="variant"
+                                    <select name="variant" data-variant="variant"
                                             class="fn_variant variant_select{if $product->variants|count < 2} hidden{/if}">
                                         {foreach $product->variants as $v}
                                             <option value="{$v->id}" data-price="{$v->price|convert}"

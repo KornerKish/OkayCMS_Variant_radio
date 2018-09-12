@@ -7,12 +7,12 @@ $(document).on('submit', '.fn_variants', function (e) {
     var variant,
         amount;
     /* Вариант */
-    if ($(this).find('input[name=variant]:checked').size() > 0) {
-        variant = $(this).find('input[name=variant]:checked').val();
-    } else if ($(this).find('input[name=variant]').size() > 0) {
-        variant = $(this).find('input[name=variant]').val();
-    } else if ($(this).find('select[name=variant]').size() > 0) {
-        variant = $(this).find('select[name=variant]').val();
+    if ($(this).find('input[data-variant=variant]:checked').size() > 0) {
+        variant = $(this).find('input[data-variant=variant]:checked').val();
+    } else if ($(this).find('input[data-variant=variant]').size() > 0) {
+        variant = $(this).find('input[data-variant=variant]').val();
+    } else if ($(this).find('select[data-variant=variant]').size() > 0) {
+        variant = $(this).find('select[data-variant=variant]').val();
     }
     /* Кол-во */
     if ($(this).find('input[name=amount]').size() > 0) {

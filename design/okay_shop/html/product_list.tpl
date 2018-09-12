@@ -77,11 +77,28 @@
             {* Submit cart button *}
             <button class="button buy fn_is_stock{if $product->variant->stock < 1} hidden{/if}" type="submit"><span data-language="add_to_cart">{$lang->add_to_cart}</span></button>
             {* Product variants *}
-            <select name="variant" class="fn_variant variant_select {if $product->variants|count == 1}hidden{/if}">
-                {foreach $product->variants as $v}
-                    <option value="{$v->id}" data-price="{$v->price|convert}" data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if}>{if $v->name}{$v->name|escape}{else}{$product->name|escape}{/if}</option>
-                {/foreach}
-            </select>
+            {if $product->variant_radio}
+                <div style="margin-top: 10px; margin-left: -113px;" class="fn_variant {if $product->variants|count < 2} hidden{/if}">
+                    {foreach $product->variants as $v}
+                        <input type="radio" id="variant{$v->id}" class="radio" data-variant="variant"
+                               name="{$product->name}" value="{$v->id}"
+                               data-price="{$v->price|convert}" {if (empty($first))} checked="checked" {$first=1} {/if}
+                               data-stock="{$v->stock}" {if $v->compare_price > 0}
+                            data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku}
+                            data-sku="{$v->sku|escape}"{/if}>
+                        <label for="variant{$v->id}">{if $v->name}{$v->name|escape}{else}{$product->name|escape}{/if}</label>
+                        <br/>
+                    {/foreach}
+                </div>
+            {else}
+                <select name="variant" data-variant="variant"
+                        class="fn_variant variant_select{if $product->variants|count < 2} hidden{/if}">
+                    {foreach $product->variants as $v}
+                        <option value="{$v->id}" data-price="{$v->price|convert}"
+                                data-stock="{$v->stock}"{if $v->compare_price > 0} data-cprice="{$v->compare_price|convert}"{/if}{if $v->sku} data-sku="{$v->sku|escape}"{/if}>{if $v->name}{$v->name|escape}{else}{$product->name|escape}{/if}</option>
+                    {/foreach}
+                </select>
+            {/if}
         </form>
     </div>
 </div>

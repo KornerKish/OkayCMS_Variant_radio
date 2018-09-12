@@ -1,4 +1,4 @@
-<?php /* Smarty version Smarty-3.1.19-dev, created on 2018-08-21 21:28:56
+<?php /* Smarty version Smarty-3.1.19-dev, created on 2018-09-12 20:38:31
          compiled from "C:\OSPanel\domains\OkayCMS2\design\okay_shop\html\product_list.tpl" */ ?>
 <?php /*%%SmartyHeaderCode:9891097945b7c59e820f338-76932195%%*/if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
@@ -7,7 +7,7 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '74dcda7512b821b7acd54ba3f16263844a4abb84' => 
     array (
       0 => 'C:\\OSPanel\\domains\\OkayCMS2\\design\\okay_shop\\html\\product_list.tpl',
-      1 => 1534613055,
+      1 => 1536773907,
       2 => 'file',
     ),
   ),
@@ -15,6 +15,8 @@ $_valid = $_smarty_tpl->decodeProperties(array (
   'function' => 
   array (
   ),
+  'version' => 'Smarty-3.1.19-dev',
+  'unifunc' => 'content_5b7c59e8273b99_04990661',
   'variables' => 
   array (
     'product' => 0,
@@ -25,10 +27,9 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     'wished_products' => 0,
     'currency' => 0,
     'v' => 0,
+    'first' => 0,
   ),
   'has_nocache_code' => false,
-  'version' => 'Smarty-3.1.19-dev',
-  'unifunc' => 'content_5b7c59e8273b99_04990661',
 ),false); /*/%%SmartyHeaderCode%%*/?>
 <?php if ($_valid && !is_callable('content_5b7c59e8273b99_04990661')) {function content_5b7c59e8273b99_04990661($_smarty_tpl) {?>
 <div class="preview fn_product">
@@ -151,22 +152,53 @@ cart">
             <button class="button buy fn_is_stock<?php if ($_smarty_tpl->tpl_vars['product']->value->variant->stock<1) {?> hidden<?php }?>" type="submit"><span data-language="add_to_cart"><?php echo $_smarty_tpl->tpl_vars['lang']->value->add_to_cart;?>
 </span></button>
             
-            <select name="variant" class="fn_variant variant_select <?php if (count($_smarty_tpl->tpl_vars['product']->value->variants)==1) {?>hidden<?php }?>">
-                <?php  $_smarty_tpl->tpl_vars['v'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['v']->_loop = false;
+            <?php if ($_smarty_tpl->tpl_vars['product']->value->variant_radio) {?>
+                <div style="margin-top: 10px; margin-left: -113px;" class="fn_variant <?php if (count($_smarty_tpl->tpl_vars['product']->value->variants)<2) {?> hidden<?php }?>">
+                    <?php  $_smarty_tpl->tpl_vars['v'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['v']->_loop = false;
  $_from = $_smarty_tpl->tpl_vars['product']->value->variants; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
 foreach ($_from as $_smarty_tpl->tpl_vars['v']->key => $_smarty_tpl->tpl_vars['v']->value) {
 $_smarty_tpl->tpl_vars['v']->_loop = true;
 ?>
-                    <option value="<?php echo $_smarty_tpl->tpl_vars['v']->value->id;?>
+                        <input type="radio" id="variant<?php echo $_smarty_tpl->tpl_vars['v']->value->id;?>
+" class="radio" data-variant="variant"
+                               name="<?php echo $_smarty_tpl->tpl_vars['product']->value->name;?>
+" value="<?php echo $_smarty_tpl->tpl_vars['v']->value->id;?>
+"
+                               data-price="<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_MODIFIER]['convert'][0][0]->convert($_smarty_tpl->tpl_vars['v']->value->price);?>
+" <?php if ((empty($_smarty_tpl->tpl_vars['first']->value))) {?> checked="checked" <?php $_smarty_tpl->tpl_vars['first'] = new Smarty_variable(1, null, 0);?> <?php }?>
+                               data-stock="<?php echo $_smarty_tpl->tpl_vars['v']->value->stock;?>
+" <?php if ($_smarty_tpl->tpl_vars['v']->value->compare_price>0) {?>
+                            data-cprice="<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_MODIFIER]['convert'][0][0]->convert($_smarty_tpl->tpl_vars['v']->value->compare_price);?>
+"<?php }?><?php if ($_smarty_tpl->tpl_vars['v']->value->sku) {?>
+                            data-sku="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['v']->value->sku, ENT_QUOTES, 'UTF-8', true);?>
+"<?php }?>>
+                        <label for="variant<?php echo $_smarty_tpl->tpl_vars['v']->value->id;?>
+"><?php if ($_smarty_tpl->tpl_vars['v']->value->name) {?><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['v']->value->name, ENT_QUOTES, 'UTF-8', true);?>
+<?php } else { ?><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['product']->value->name, ENT_QUOTES, 'UTF-8', true);?>
+<?php }?></label>
+                        <br/>
+                    <?php } ?>
+                </div>
+            <?php } else { ?>
+                <select name="variant" data-variant="variant"
+                        class="fn_variant variant_select<?php if (count($_smarty_tpl->tpl_vars['product']->value->variants)<2) {?> hidden<?php }?>">
+                    <?php  $_smarty_tpl->tpl_vars['v'] = new Smarty_Variable; $_smarty_tpl->tpl_vars['v']->_loop = false;
+ $_from = $_smarty_tpl->tpl_vars['product']->value->variants; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array');}
+foreach ($_from as $_smarty_tpl->tpl_vars['v']->key => $_smarty_tpl->tpl_vars['v']->value) {
+$_smarty_tpl->tpl_vars['v']->_loop = true;
+?>
+                        <option value="<?php echo $_smarty_tpl->tpl_vars['v']->value->id;?>
 " data-price="<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_MODIFIER]['convert'][0][0]->convert($_smarty_tpl->tpl_vars['v']->value->price);?>
-" data-stock="<?php echo $_smarty_tpl->tpl_vars['v']->value->stock;?>
+"
+                                data-stock="<?php echo $_smarty_tpl->tpl_vars['v']->value->stock;?>
 "<?php if ($_smarty_tpl->tpl_vars['v']->value->compare_price>0) {?> data-cprice="<?php echo $_smarty_tpl->smarty->registered_plugins[Smarty::PLUGIN_MODIFIER]['convert'][0][0]->convert($_smarty_tpl->tpl_vars['v']->value->compare_price);?>
 "<?php }?><?php if ($_smarty_tpl->tpl_vars['v']->value->sku) {?> data-sku="<?php echo htmlspecialchars($_smarty_tpl->tpl_vars['v']->value->sku, ENT_QUOTES, 'UTF-8', true);?>
 "<?php }?>><?php if ($_smarty_tpl->tpl_vars['v']->value->name) {?><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['v']->value->name, ENT_QUOTES, 'UTF-8', true);?>
 <?php } else { ?><?php echo htmlspecialchars($_smarty_tpl->tpl_vars['product']->value->name, ENT_QUOTES, 'UTF-8', true);?>
 <?php }?></option>
-                <?php } ?>
-            </select>
+                    <?php } ?>
+                </select>
+            <?php }?>
         </form>
     </div>
 </div>
