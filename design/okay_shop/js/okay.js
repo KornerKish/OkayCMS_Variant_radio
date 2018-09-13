@@ -7,12 +7,12 @@ $(document).on('submit', '.fn_variants', function (e) {
     var variant,
         amount;
     /* Вариант */
-    if ($(this).find('input[data-variant=variant]:checked').size() > 0) {
-        variant = $(this).find('input[data-variant=variant]:checked').val();
-    } else if ($(this).find('input[data-variant=variant]').size() > 0) {
-        variant = $(this).find('input[data-variant=variant]').val();
-    } else if ($(this).find('select[data-variant=variant]').size() > 0) {
-        variant = $(this).find('select[data-variant=variant]').val();
+    if ($(this).find('input[name=variant]:checked').size() > 0) {
+        variant = $(this).find('input[name=variant]:checked').val();
+    } else if ($(this).find('input[name=variant]').size() > 0) {
+        variant = $(this).find('input[name=variant]').val();
+    } else if ($(this).find('select[name=variant]').size() > 0) {
+        variant = $(this).find('select[name=variant]').val();
     }
     /* Кол-во */
     if ($(this).find('input[name=amount]').size() > 0) {
@@ -68,71 +68,6 @@ $(document).on('change', '.fn_variant', function () {
     /* Артикул */
     if (typeof(selected.data('sku')) != 'undefined') {
         sku.text(selected.data('sku'));
-        sku.parent().removeClass('hidden');
-    } else {
-        sku.text('');
-        sku.parent().addClass('hidden');
-    }
-    /* Наличие на складе */
-    if (stock == 0) {
-        parent.find('.fn_not_stock').removeClass('hidden');
-        parent.find('.fn_in_stock').addClass('hidden');
-    } else {
-        parent.find('.fn_in_stock').removeClass('hidden');
-        parent.find('.fn_not_stock').addClass('hidden');
-    }
-    /* Предзаказ */
-    if (stock == 0 && okay.is_preorder) {
-        parent.find('.fn_is_preorder').removeClass('hidden');
-        parent.find('.fn_is_stock, .fn_not_preorder').addClass('hidden');
-    } else if (stock == 0 && !okay.is_preorder) {
-        parent.find('.fn_not_preorder').removeClass('hidden');
-        parent.find('.fn_is_stock, .fn_is_preorder').addClass('hidden');
-    } else {
-        parent.find('.fn_is_stock').removeClass('hidden');
-        parent.find('.fn_is_preorder, .fn_not_preorder').addClass('hidden');
-    }
-
-    if (typeof(units) != 'undefined') {
-        parent.find('.fn_units').text(', ' + units);
-    } else {
-        parent.find('.fn_units').text('');
-    }
-});
-
-
-$(document).on('change', '.fn_variant', function () {
-
-    var checked = $('input[name=variant]:checked'),
-        parent = checked.closest('.fn_product'),
-        price = parent.find('.fn_price'),
-        cprice = parent.find('.fn_old_price'),
-        sku = parent.find('.fn_sku'),
-        stock = parseInt(checked.data('stock')),
-        amount = parent.find('input[name="amount"]'),
-        camoun = parseInt(amount.val()),
-        units = checked.data('units');
-    price.html(checked.data('price'));
-    amount.data('max', stock);
-    /* Количество товаров */
-    if (stock < camoun) {
-        amount.val(stock);
-    } else if (okay.amount > camoun) {
-        amount.val(okay.amount);
-    }
-    else if (isNaN(camoun)) {
-        amount.val(okay.amount);
-    }
-    /* Цены */
-    if (checked.data('cprice')) {
-        cprice.html(checked.data('cprice'));
-        cprice.parent().removeClass('hidden');
-    } else {
-        cprice.parent().addClass('hidden');
-    }
-    /* Артикул */
-    if (typeof(checked.data('sku')) != 'undefined') {
-        sku.text(checked.data('sku'));
         sku.parent().removeClass('hidden');
     } else {
         sku.text('');
